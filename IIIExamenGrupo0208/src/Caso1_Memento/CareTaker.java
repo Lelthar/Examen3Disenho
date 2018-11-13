@@ -30,7 +30,8 @@ public class CareTaker {
     }
     
     public void guardarSavePoint(Memento savePoint) {
-        this.savePoints.add(savePoint);
+        System.out.println("Posicion del savepoint: "+Integer.toString(this.savePoints.size()));
+        this.savePoints.add(savePoint);  
     }
     
     public Memento undo() {
