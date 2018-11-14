@@ -5,7 +5,7 @@
  */
 package Caso2_Command;
 
-import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
+import java.util.concurrent.Semaphore;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,12 +15,12 @@ import java.util.logging.Logger;
  * @author gerald
  */
 public class ManejoTareas {
-   private Mutex mutexListaEspera;
+   private Semaphore semaforoListaEspera;
    private boolean correr;
    private ArrayList<Tarea> listaEspera;
 
     public ManejoTareas() {
-        mutexListaEspera = new Mutex();
+        semaforoListaEspera = new Semaphore(1);
         correr = false;
         listaEspera = new ArrayList<>();
     }
@@ -30,6 +30,7 @@ public class ManejoTareas {
     }
     
     public void iniciarHilos(int cantidad) {
+        this.correr = true;
         for (int i = 0; i < cantidad; i++) {
             HiloEjecucion hiloEjecucion = new HiloEjecucion();
             hiloEjecucion.start();
@@ -37,9 +38,9 @@ public class ManejoTareas {
     }
     
     public void agregarTarea(Tarea tarea) throws InterruptedException {
-        mutexListaEspera.acquire();
+        semaforoListaEspera.acquire();
         listaEspera.add(tarea);
-        mutexListaEspera.release();
+        semaforoListaEspera.release();
     }
     
     private class HiloEjecucion extends Thread {
@@ -50,15 +51,16 @@ public class ManejoTareas {
         public void run() {
             while (correr) {
                 try {
-                    mutexListaEspera.acquire();
+                    semaforoListaEspera.acquire();
                     
                     if (!listaEspera.isEmpty()) {
                         Tarea tarea = listaEspera.get(0);
                         listaEspera.remove(0);
                         tarea.run();
                     }
-                    
-                    mutexListaEspera.release();
+ 
+                    semaforoListaEspera.release();
+                    Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ManejoTareas.class.getName()).log(Level.SEVERE, null, ex);
                 }   

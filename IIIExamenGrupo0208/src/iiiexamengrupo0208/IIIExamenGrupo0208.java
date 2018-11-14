@@ -8,6 +8,12 @@ package iiiexamengrupo0208;
 import Caso1_Memento.Calculadora;
 import Caso1_Memento.CareTaker;
 import Caso1_Memento.Memento;
+import Caso2_Command.ManejoTareas;
+import Caso2_Command.Tarea;
+import Caso2_Command.TareaCancion;
+import Caso2_Command.TareaCorreo;
+import Caso2_Command.TareaGaleria;
+import Caso2_Command.TareaSms;
 import Caso3_Mediator.Algodon;
 import Caso3_Mediator.Boton;
 import Caso3_Mediator.Calentador;
@@ -31,7 +37,7 @@ public class IIIExamenGrupo0208 {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // TODO code application logic here
         
         /**
@@ -118,7 +124,7 @@ public class IIIExamenGrupo0208 {
         System.out.println("Valor y: "+Double.toString(calculadora.getVariableY()));
         System.out.println("Valor z: "+Double.toString(calculadora.getVariableZ()));
         
-                
+    
         /**
          *
          * Prueba Caso 3 Mediator
@@ -193,6 +199,61 @@ public class IIIExamenGrupo0208 {
         consola.ejecutar(archivoVideo);
         System.out.println("---------------------------------------------------");
         consola.ejecutar(archivoExtra);
+        
+        /**
+         *
+         * Prueba Caso 2 Command
+         * 
+         */
+        System.out.println("-----------------------Caso2-------------------");
+        
+        Tarea tareaCancion1 = new TareaCancion();
+        Tarea tareaCancion2 = new TareaCancion();
+        Tarea tareaCancion3 = new TareaCancion();
+        Tarea tareaCancion4 = new TareaCancion();
+        
+        Tarea tareaCorre1 = new TareaCorreo();
+        Tarea tareaCorre2 = new TareaCorreo();
+        Tarea tareaCorre3 = new TareaCorreo();
+        Tarea tareaCorre4 = new TareaCorreo();
+        
+        Tarea tareaGaleria1 = new TareaGaleria();
+        Tarea tareaGaleria2 = new TareaGaleria();
+        Tarea tareaGaleria3 = new TareaGaleria();
+        Tarea tareaGaleria4 = new TareaGaleria();
+        
+        Tarea tareaSms1 = new TareaSms();
+        Tarea tareaSms2 = new TareaSms();
+        Tarea tareaSms3 = new TareaSms();
+        Tarea tareaSms4 = new TareaSms();
+        
+        ManejoTareas manejoTareas = new ManejoTareas();
+        
+        manejoTareas.agregarTarea(tareaCancion1);
+        manejoTareas.agregarTarea(tareaCorre1);
+        manejoTareas.agregarTarea(tareaGaleria1);
+        manejoTareas.agregarTarea(tareaSms1);
+        
+        manejoTareas.agregarTarea(tareaCancion2);
+        manejoTareas.agregarTarea(tareaCorre2);
+        manejoTareas.agregarTarea(tareaGaleria2);
+        manejoTareas.agregarTarea(tareaSms2);
+        
+        manejoTareas.agregarTarea(tareaCancion3);
+        manejoTareas.agregarTarea(tareaCorre3);
+        manejoTareas.agregarTarea(tareaGaleria3);
+        manejoTareas.agregarTarea(tareaSms3);
+        
+        manejoTareas.agregarTarea(tareaCancion4);
+        manejoTareas.agregarTarea(tareaCorre4);
+        manejoTareas.agregarTarea(tareaGaleria4);
+        manejoTareas.agregarTarea(tareaSms4);
+        
+        //Se agregó un sleep de 1 segundo a los hilos para que se viera mejor la simulacion
+        
+        manejoTareas.iniciarHilos(10); //Es la cantidad de hilos que se van a crear y los inicia para realizar las tareas
+        
+        //manejoTareas.pararHilos(); //Para la ejecución de los hilos
         
     }
     
